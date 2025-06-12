@@ -57,6 +57,9 @@ Guide the baker through his kitchen, collect baguettes, and enjoy the company of
 ### Conclusion
 Enjoy the Baker and Tomato Animation! Experience fun adventures in the kitchen, collect baguettes, and savor every moment with the tomato.
 
+## Cedit
+This project could not have been successfully completed without the incredible diligence and dedication of my team. Karo Bokani (GitHub username not found), Austin Blencowe (austinblencowe1), Ryan Sambhar (Tserriednicht). 
+
  *Update this README regularly.*
 
 

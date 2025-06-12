@@ -1,0 +1,95 @@
+class Baguette {
+  int totalSegments = 8;
+  int currentSegments = totalSegments;
+  float xPos;
+  float yPos;
+  float baguetteWidth = 10;
+  float baguetteHeight = 10 * totalSegments;
+  float spacingFactor = 0.75f;
+  float spawnX;
+  float baguetteOffset;
+  float baguetteBreathingSpeed = 0.1f;
+  float baguetteBreathingRange = 3.0f;
+  boolean baguetteFloatUp = true;
+  boolean isCollected = true;
+
+  Baguette(float x, float y) {
+    xPos = x;
+    spawnY = y - random(30, 150);
+    baguetteOffset = 0;
+    spawnX = x;
+  }
+
+  void display(float armX, float armY) {
+    if (isCollected) {
+      displayCollectedBaguette(armX, armY);
+    } else {
+      displayUncollectedBaguette();
+      updateBaguetteOffset();
+    }
+  }
+
+  void displayCollectedBaguette(float armX, float armY) {
+    xPos = armX;
+    yPos = armY - (currentSegments * 4) - ((baguetteHeight / totalSegments) * spacingFactor);
+
+    for (int i = 0; i < currentSegments; i++) {
+      float segmentYPos = yPos + (i * (baguetteHeight / totalSegments) * spacingFactor);
+
+      fill(color(196, 164, 132));
+      rect(xPos - baguetteWidth / 2, segmentYPos, baguetteWidth, baguetteWidth, 3);
+      fill(color(231, 201, 169));
+      arc(xPos + 5, (segmentYPos + baguetteWidth / 2) - 1, 8, 8, radians(120), radians(270));
+    }
+  }
+
+  void updateBaguetteOffset() {
+    if (baguetteFloatUp) {
+      baguetteOffset += baguetteBreathingSpeed;
+      if (baguetteOffset >= baguetteBreathingRange) {
+        baguetteFloatUp = false;
+      }
+    } else {
+      baguetteOffset -= baguetteBreathingSpeed;
+      if (baguetteOffset <= -baguetteBreathingRange) {
+        baguetteFloatUp = true;
+      }
+    }
+  }
+
+  void eat() {
+    if (isCollected) {
+      if (currentSegments > 0) {
+        currentSegments--;
+        if (currentSegments == 0) {
+          resetSegments();
+          spawnX = random(80 + baguetteWidth / 2, 300 - baguetteWidth / 2);
+        }
+      }
+    }
+  }
+
+  void resetSegments() {
+    currentSegments = totalSegments;
+    isCollected = false;
+  }
+
+  void collect() {
+    isCollected = true;
+  }
+
+
+
+  float spawnY; 
+  
+  void displayUncollectedBaguette() {
+    for (int i = 0; i < totalSegments; i++) {
+      float segmentYPos = spawnY + baguetteOffset - (currentSegments * 4) + (i * (baguetteHeight / totalSegments) * spacingFactor);
+
+      fill(color(196, 164, 132));
+      rect(spawnX - baguetteWidth / 2, segmentYPos, baguetteWidth, baguetteWidth, 3);
+      fill(color(231, 201, 169));
+      arc(spawnX + 5, (segmentYPos + baguetteWidth / 2) - 1, 8, 8, radians(120), radians(270));
+    }
+  }
+}
